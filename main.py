@@ -44,7 +44,7 @@ def process_article_data(raw_data):
 
 
 
-def newapi_client(api_key, query, timeout=30, retries=3):
+def newsapi_client(api_key, query, timeout=30, retries=3):
     return f"NewsAPI: {query}, con Timeout: {timeout}, Retries: {retries}"
 
 def guardian_client(api_key, section, from_date, timeout=30, retries=3):
@@ -56,8 +56,8 @@ def ejemplo_args(api_key, *args):
     print(f"Type Args:{type(args)}")
     print("===========")
 
-ejemplo_args("API Key", "Este", "parametro", "aca")
-ejemplo_args("API Key", "Hola", "mundo")
+# ejemplo_args("API Key", "Este", "parametro", "aca")
+# ejemplo_args("API Key", "Hola", "mundo")
 
 
 
@@ -66,13 +66,57 @@ ejemplo_args("API Key", "Hola", "mundo")
 def suma_numeros(*args):
     return sum(args)
 
-print(suma_numeros(1, 2, 3))          # Salida: 6
-print(suma_numeros(10, 20, 30, 40))  # Salida: 100
+# print(suma_numeros(1, 2, 3))          # Salida: 6
+# print(suma_numeros(10, 20, 30, 40))  # Salida: 100
 
 
 
 
+# Kwargs: Argumentos con nombre - diccionario de parámetros
 
+def ejemplo_kwargs(**kwargs):
+    print(f"kwargs: {type(kwargs)}")
+    print(f"kwargs: {kwargs}")
+    print("======")
+
+
+ejemplo_kwargs(
+    api_key="DEMO",
+    query="Noticias de Python",
+    timeout=30,
+    retries=3,
+)
+ejemplo_kwargs(
+    api_key="DEMO_GUARDIAN",
+    section="Sports",
+    from_date="2020-10-20",
+    timeout=30,
+    retries=3,
+)
+
+
+def fetch_news(api_name, *args, **kwargs):
+    """
+    Fución flexible para conectar con la API
+    """
+
+    base_config = {
+        "timeout": 30,
+        "retries": 3,
+    }
+
+    config = {
+        **base_config,
+        **kwargs,
+    }
+
+    api_clients = {
+        "newapi": newsapi_client,
+        "guardian": guardian_client,
+    }
+
+    client = api_clients[api_name]
+    return client(*args, **config)
 
 
 
