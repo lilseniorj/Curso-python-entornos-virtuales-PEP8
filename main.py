@@ -44,11 +44,9 @@ def process_article_data(raw_data):
 
 
 
-def newsapi_client(api_key, query, timeout=30, retries=3):
-    return f"NewsAPI: {query}, con Timeout: {timeout}, Retries: {retries}"
-
 def guardian_client(api_key, section, from_date, timeout=30, retries=3):
     return f"Guardian: {section} desde {from_date} con Timeout: {timeout}, Retries: {retries}"
+
 
 def ejemplo_args(api_key, *args):
     print(f"API Key: {api_key}")
@@ -80,19 +78,38 @@ def ejemplo_kwargs(**kwargs):
     print("======")
 
 
-ejemplo_kwargs(
-    api_key="DEMO",
-    query="Noticias de Python",
-    timeout=30,
-    retries=3,
-)
-ejemplo_kwargs(
-    api_key="DEMO_GUARDIAN",
-    section="Sports",
-    from_date="2020-10-20",
-    timeout=30,
-    retries=3,
-)
+# ejemplo_kwargs(
+#     api_key="DEMO",
+#     query="Noticias de Python",
+#     timeout=30,
+#     retries=3,
+# )
+# ejemplo_kwargs(
+#     api_key="DEMO_GUARDIAN",
+#     section="Sports",
+#     from_date="2020-10-20",
+#     timeout=30,
+#     retries=3,
+# )
+
+
+API_KEY = "434d64c5a1394492ab79df28239cd86c"
+BASE_URL = "https://newsapi.org/v2/everything"
+
+import json
+import urllib.request
+import urllib.parse
+
+
+def newsapi_client(api_key, query, timeout=30, retries=3):
+    query_string = urllib.parse.urlencode({"q": query, "apiKey": api_key})
+    url = f"{BASE_URL}?{query_string}"
+
+    with urllib.request.urlopen(url, timeout=timeout) as response:
+        data = response.read().decode("utf-8")
+        return json.loads(data)
+    return f"NewsAPI: {query}, con Timeout: {timeout}, Retries: {retries}"
+
 
 
 def fetch_news(api_name, *args, **kwargs):
@@ -117,6 +134,10 @@ def fetch_news(api_name, *args, **kwargs):
 
     client = api_clients[api_name]
     return client(*args, **config)
+
+response_data = fetch_news("newapi", api_key=API_KEY, query="Python")
+for article in response_data["articles"]:
+    print(article["title"])
 
 
 
