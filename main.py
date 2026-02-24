@@ -93,7 +93,7 @@ def ejemplo_kwargs(**kwargs):
 # )
 
 
-API_KEY = "434d64c5a1394492ab79df28239cd86c"
+API_KEY = "434d64c5a1394492ab79df28239cd86c" # si modificamos la APIKEY se ejecuta el finally que es "LA API KEY ES INVALIDA"
 BASE_URL = "https://newsapi.org/v2/everything"
 
 import json
@@ -105,9 +105,13 @@ def newsapi_client(api_key, query, timeout=30, retries=3):
     query_string = urllib.parse.urlencode({"q": query, "apiKey": api_key})
     url = f"{BASE_URL}?{query_string}"
 
-    with urllib.request.urlopen(url, timeout=timeout) as response:
-        data = response.read().decode("utf-8")
-        return json.loads(data)
+    try:
+        with urllib.request.urlopen(url, timeout=timeout) as response:
+            data = response.read().decode("utf-8")
+            return json.loads(data)
+    except urllib.error.URLError:
+        print("La API KEY es invalida")
+        return {"articles": []}
     return f"NewsAPI: {query}, con Timeout: {timeout}, Retries: {retries}"
 
 
