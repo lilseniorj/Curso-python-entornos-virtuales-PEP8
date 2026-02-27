@@ -26,5 +26,6 @@
   "peacock.color": "#FFD43B",
   "cSpell.words": [
     "tipo"
-  ]
+  ],
+  "python-envs.defaultEnvManager": "ms-python.python:venv"
 }

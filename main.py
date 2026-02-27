@@ -9,10 +9,46 @@ MAX_RETRIES = 3
 DEFAULT_LANGUAGE = "es"  # PEP 8: Comillas dobles para strings
 
 
-# PEP 8: Utilidades comunes del proyecto - funciones en snake_case
-def clean_text(text):
-    # PEP 8: 4 espacios por indentación, no tabs
-    """Limpia y normaliza texto."""  # PEP 8: Docstrings en comillas dobles triples
+def clean_text(text: str) -> str:
+    """Clean and normalize a text string.
+
+    Strips leading and trailing whitespace from the input string and
+    converts all characters to lowercase. If the input is empty or
+    evaluates to falsy, an empty string is returned immediately.
+
+    Parameters
+    ----------
+    text : str
+        The raw text string to be cleaned. May contain leading/trailing
+        whitespace or mixed-case characters.
+
+    Returns
+    -------
+    str
+        The cleaned string with whitespace stripped and all characters
+        converted to lowercase. Returns an empty string ``""`` if the
+        input is falsy (e.g. ``None``, ``""``, ``"   "`` after strip).
+
+    Raises
+    ------
+    AttributeError
+        If ``text`` is not a string or string-like object (i.e. does not
+        implement ``.strip()`` and ``.lower()``).
+
+    Examples
+    --------
+    >>> clean_text("  Hello World  ")
+    'hello world'
+
+    >>> clean_text("PYTHON")
+    'python'
+
+    >>> clean_text("")
+    ''
+
+    >>> clean_text("   ")
+    ''
+    """
     if not text:
         return ""
     return text.strip().lower()
