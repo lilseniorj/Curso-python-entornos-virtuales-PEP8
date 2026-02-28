@@ -1,0 +1,40 @@
+# Variables de entorno y API keys
+.env
+.env.local
+.env.*.local
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.pyc
+
+# Entornos virtuales
+.venv/
+venv/
+env/
+
+# UV
+uv.lock
+
+# Mypy
+.mypy_cache/
+
+# VS Code
+.vscode/
+
+# Distribución y builds
+dist/
+build/
+*.egg-info/
+
+# Pytest
+.pytest_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Entorno virtual
+.vscode

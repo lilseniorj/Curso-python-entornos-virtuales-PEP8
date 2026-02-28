@@ -1,2 +1,10 @@
-API_KEY = "434d64c5a1394492ab79df28239cd86c" # si modificamos la APIKEY se ejecuta el finally que es "LA API KEY ES INVALIDA"
+"""Configuración de la aplicación."""
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+os.environ.get("API_KEY")
+
+API_KEY = os.environ.get("API_KEY")
 BASE_URL = "https://newsapi.org/v2/everything"

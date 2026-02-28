@@ -6,6 +6,7 @@ from news_analyzer.config import API_KEY
 from news_analyzer.exceptions import APIKeyError
 from news_analyzer.api_client import fetch_news
 from news_analyzer.utils import get_unique_sources, get_articules_by_source, get_reading_time
+from news_analyzer.open_ia import analyze_news_with_ia
 
 response_data = None
 try:
@@ -14,21 +15,4 @@ except APIKeyError as e:
     print(f"{e}")
 
 if response_data:
-
-    source_set = get_unique_sources(response_data["articles"])
-    for index, source  in enumerate(source_set, start=1):
-        print(f"No: {index} - {source}")
-
-    articles = list(map(get_reading_time, response_data["articles"]))
-    for article in articles:
-        print(f"{article['title']}, -- Tiempo de lectura: {article['reading_time']} minutos")
-
-    # for article in response_data["articles"]:
-    #     print(article["source"])
-
-
-    #llamado a la funcion y a la lista de articulos
-
-    github_articles = get_articules_by_source(response_data["articles"], "github.com")
-    for github_article in github_articles:
-        print(github_article["source"]["name"], github_article["title"])
+    print(analyze_news_with_ia(response_data["articles"], "Que piensas de Python"))
