@@ -35,6 +35,3 @@ build/
 
 # Jupyter
 .ipynb_checkpoints/
-
-# Entorno virtual
-.vscode
