@@ -66,3 +66,10 @@ def get_articules_by_source(articles: list[dict], source: str) -> list[dict]:
         lambda article: article["source"]["name"].lower() == source.lower(),
         articles,
     ))
+
+
+def get_reading_time(article: dict) -> dict:
+    """Calcular el tiempo de lectura"""
+    minutes = len(article["content"]) // 200 + 1
+    article["reading_time"] = minutes
+    return article
